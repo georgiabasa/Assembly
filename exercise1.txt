@@ -1,0 +1,82 @@
+Georgia Basagianni
+
+START: 	LXI H, 2100H		; Arxiki 8esi mnimis 2100H
+		MVI B, 01H			; Fortwsi dedomenou 01H ston kataxwriti B
+		MVI C, 08H			; Fortwsi dedomenou 08H ston kataxwriti C
+		MVI D, 40H			; Fortwsi dedomenou 40H ston kataxwriti D
+		MVI A, 16H			; Fortwsi dedomenou 16H ston kataxwriti D
+		MVI E, 13H			; Metritis gia loop 19 fores (1i fortwsi egine idi)
+		MOV M,B			; Metafora dedomenou apo ton kataxwriti B sti mnimi
+	 	INX H				; Afksisi 8esis mnimis kata 1
+      	MOV M,C			; Metafora dedomenou apo ton kataxwriti C sti mnimi
+		INX H				; Afksisi 8esis mnimis kata 1
+        	MOV M,D			; Metafora dedomenou apo ton kataxwriti D sti mnimi
+		INX H				; Afksisi 8esis mnimis kata 1
+        	MOV M,A			; Metafora dedomenou apo ton kataxwriti A sti mnimi
+		INX H				; Afksisi 8esis mnimis kata 1
+
+LOOP: 	MOV M,B			; Metafora dedomenou apo ton kataxwriti B sti mnimi
+		INX H				; Afksisi 8esis mnimis kata 1
+		MOV M,C			; Metafora dedomenou apo ton kataxwriti C sti mnimi
+		INX H				; Afksisi 8esis mnimis kata 1
+        	ADI 12H			; Pros8etei 12H ston kataxwriti A
+        	JC CARRY			; Jump sto CARRY an exei kratoumeno to A+12H prin
+		MOV M,D			; Metafora dedomenou apo ton kataxwriti D sti mnimi
+		INX H				; Afksisi 8esis mnimis kata 1
+        	MOV M, A			; Metafora dedomenou apo ton kataxwriti A sti mnimi
+		DCR E				; Meiwsi tou metriti E kata 1
+        	INX H				; Afksisi 8esis mnimis kata 1
+		JNZ LOOP			; Oso den uparxei ZERO Flag jump to LOOP
+        	JMP STARTB			; Jump to STARTB - arxi b erwtimatos askisis
+        
+CARRY:  	INR D    			; Afksisi tou 40H ston kataxwriti D kata 1
+		MOV M, D			; Metafora dedomenou apo ton kataxwriti D sti mnimi
+        	INX H				; Afksisi 8esis mnimis kata 1
+        	MOV M, A			; Metafora dedomenou apo ton kataxwriti A sti mnimi
+        	DCR E				; Meiwsi tou metriti E kata 1
+        	INX H				; Afksisi 8esis mnimis kata 1
+		JMP LOOP			; Jump to LOOP
+        
+
+
+
+
+STARTB:	LXI H, 2150H		; Arxiki 8esi mnimis 2150H - sunexeia tou a erwtimatos
+		MVI A, 00H			; Fortwsi dedomenou 00H ston kataxwriti A - arxikopoiisi
+		MVI B, 01H			; Fortwsi dedomenou 01H ston kataxwriti B
+		ADD B				; Pros8esi tou dedomenou tou kataxwriti B ston A
+		MOV M, B			; Metafora dedomenou apo ton kataxwriti B sti mnimi
+		INX H				; Afksisi 8esis mnimis kata 1
+		MVI C, 08H			; Fortwsi dedomenou 08H ston kataxwriti C
+		ADD C				; Pros8esi tou dedomenou tou kataxwriti C ston A
+		MOV M, C			; Metafora dedomenou apo ton kataxwriti C sti mnimi
+		INX H				; Afksisi 8esis mnimis kata 1
+		MVI D, 40H			; Fortwsi dedomenou 40H ston kataxwriti D
+		ADD D				; Pros8esi tou dedomenou tou kataxwriti D ston A
+		MOV M, D			; Metafora dedomenou apo ton kataxwriti D sti mnimi
+		INX H				; Afksisi 8esis mnimis kata 1
+		MVI E, 16H			; Fortwsi dedomenou 16H ston kataxwriti E
+		ADD E				; Pros8esi tou dedomenou tou kataxwriti E ston A
+		MOV M, E			; Metafora dedomenou apo ton kataxwriti E sti mnimi
+		INX H				; Afksisi 8esis mnimis kata 1
+		MOV M, A			; Metafora dedomenou apo ton kataxwriti A sti mnimi
+		INX H				; Afksisi 8esis mnimis kata 1
+		
+		MOV A, B			; Metafora dedomenou apo ton kataxwriti B ston A
+		ANA D				; Logiki praksi A AND D
+		MOV M, A			; Metafora dedomenou apo ton kataxwriti A sti mnimi
+		MOV A, C			; Metafora dedomenou apo ton kataxwriti C ston A
+		ANA E				; Logiki praksi A AND E
+		ORA M				; Logiki praksi A OR M
+		MOV M, A			; Metafora dedomenou apo ton kataxwriti A sti mnimi
+		INX H				; Afksisi 8esis mnimis kata 1
+		
+		MOV A, C			; Metafora dedomenou apo ton kataxwriti C ston A
+		SUB B				; Ari8mitiki praksi A - B
+		MOV M, A			; Metafora dedomenou apo ton kataxwriti A sti mnimi
+		MOV A, D			; Metafora dedomenou apo ton kataxwriti D ston A
+		SUB E				; Ari8mitiki praksi A - E
+		XRA M				; Logiki praksi A xOR M
+		MOV M, A			; Metafora dedomenou apo ton kataxwriti A sti mnimi
+		
+		HLT				; telos programmatos
